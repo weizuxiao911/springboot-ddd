@@ -1,0 +1,141 @@
+### PBAC 权限验证测试 - 对应 UserController
+
+@baseUrl = http://localhost:8080
+
+### --------------------------------------------------
+### @RequirePolicy 测试（固定权限码）
+### --------------------------------------------------
+
+### 1. 创建用户 - 有 USER:CREATE 权限
+POST {{baseUrl}}/api/users
+Content-Type: application/json
+x-user-id: 1
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["USER:CREATE","USER:VIEW"]}
+
+{
+  "username": "testuser123",
+  "email": "test@example.com"
+}
+
+### 预期: 200（业务成功）或 500（数据库未连接）
+
+### 2. 创建用户 - 无 USER:CREATE 权限
+POST {{baseUrl}}/api/users
+Content-Type: application/json
+x-user-id: 2
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["USER:VIEW"]}
+
+{
+  "username": "testuser",
+  "email": "test@example.com"
+}
+
+### 预期: 403 AccessDeniedException
+
+### 3. 更新邮箱 - 有 USER:UPDATE 权限
+PUT {{baseUrl}}/api/users/user-001/email?email=new@example.com
+Content-Type: application/json
+x-user-id: 1
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["USER:UPDATE","USER:VIEW"]}
+
+### 预期: 200（业务成功）或 404（用户不存在）
+
+### 4. 更新邮箱 - 无 USER:UPDATE 权限
+PUT {{baseUrl}}/api/users/user-001/email?email=new@example.com
+Content-Type: application/json
+x-user-id: 2
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["USER:VIEW"]}
+
+### 预期: 403 AccessDeniedException
+
+### 5. 停用用户 - 有 USER:DELETE 权限
+DELETE {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+x-user-id: 1
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["USER:DELETE","USER:VIEW"]}
+
+### 预期: 200（业务成功）或 404（用户不存在）
+
+### 6. 停用用户 - 无 USER:DELETE 权限
+DELETE {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+x-user-id: 2
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["USER:VIEW"]}
+
+### 预期: 403 AccessDeniedException
+
+### --------------------------------------------------
+### @RequirePermission 测试（RBAC 风格: resource + action）
+### --------------------------------------------------
+
+### 7. 获取用户 - 有 USER:READ 权限
+GET {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+x-user-id: 1
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["USER:READ","USER:VIEW"]}
+
+### 预期: 200（业务成功）或 404（用户不存在）
+
+### 8. 获取用户 - 无 USER:READ 权限
+GET {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+x-user-id: 2
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {"1":["ORDER:READ"]}
+
+### 预期: 403 AccessDeniedException
+
+### --------------------------------------------------
+### 边界场景测试
+### --------------------------------------------------
+
+### 9. 缺少权限 Headers - 无认证信息
+GET {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+
+### 预期: 500（Missing required header: x-user-id）
+
+### 10. 空权限列表
+GET {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+x-user-id: 1
+x-tenant-id: 1
+x-accessible-tenants: 1
+x-tenant-permissions: {}
+
+### 预期: 403（无任何权限）
+
+### 11. 当前租户不在可访问列表中
+GET {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+x-user-id: 1
+x-tenant-id: 1
+x-accessible-tenants: 2,3
+x-tenant-permissions: {"1":["USER:READ"],"2":["USER:READ"]}
+
+### 预期: 403（租户1不在可访问列表[2,3]中）
+
+### 12. 多租户 - 跨租户有权限
+GET {{baseUrl}}/api/users/user-001
+Content-Type: application/json
+x-user-id: 1
+x-tenant-id: 1
+x-accessible-tenants: 1,2
+x-tenant-permissions: {"1":["USER:READ","USER:VIEW"],"2":["USER:READ"]}
+
+### 预期: 200（当前租户1有 USER:READ）
