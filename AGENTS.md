@@ -2,8 +2,6 @@
 
 本文档定义 Service 模块的通用代码审查规则，适用于所有层。
 
----
-
 ## 1. 通用规则
 
 - 代码无警告级别的编译问题
@@ -12,8 +10,6 @@
 - 无硬编码的魔法值，常量提取到类或配置文件
 - 异常不吞咽（空 catch），必须处理或向上抛出
 - 公开方法有 Javadoc（类和 public 方法）
-
----
 
 ## 2. 分层依赖检查
 
@@ -33,16 +29,12 @@
 - `domain` 仓储为接口，实现在 `infrastructure`
 - `application` 层不直接操作数据源
 
----
-
 ## 3. 事件机制检查
 
 - 事件处理器使用 `@OnEvent(XxxEvent.class)` 注解
 - 事件处理器幂等（通过 `EventIdempotent` 记录去重）
 - Kafka 消息使用 JSON 格式，含 `eventType`、`eventId`、`occurredAt`、`payload` 字段
 - `EventDispatcher` 不在 `@PostConstruct` 中调用 `getBean()`（避免循环依赖）
-
----
 
 ## 4. PBAC 权限检查
 
@@ -52,8 +44,6 @@
 - Gateway 透传 Headers：`x-user-id`、`x-tenant-id`、`x-accessible-tenants`、`x-tenant-permissions`
 - `AccessDeniedException` 由 `GlobalExceptionAdvice` 统统一捕获返回 403
 
----
-
 ## 5. 数据库检查
 
 - DDL 维护在 `infrastructure/ddl.sql`
@@ -61,15 +51,11 @@
 - 公共字段：`id`(自增)、`create_time`、`modify_time`、`deleted`、`version`
 - 索引命名：`uk_` 唯一索引、`idx_` 普通索引
 
----
-
 ## 6. 测试检查
 
 - 领域层单元测试覆盖率 ≥ 90%（JaCoCo）
 - 测试使用 JUnit 5 + Mockito，不依赖 Spring 上下文
 - 测试方法命名：`shouldXxxWhenYyy` 或 `方法名_场景_预期`
-
----
 
 ## 7. 安全检查
 
@@ -77,8 +63,6 @@
 - `.env`、`credentials.json` 等文件在 `.gitignore` 中
 - 日志中不打印敏感信息（密码、Token、身份证号）
 - SQL 使用参数化查询，无字符串拼接
-
----
 
 ## 各层规范文件
 

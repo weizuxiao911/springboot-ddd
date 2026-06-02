@@ -8,8 +8,6 @@
 > 本文档定义共享内核模块（Common Layer）的代码审核规范与约束。
 > 所有新增或修改的 common 层代码必须通过审核方可合并。
 
----
-
 ## 快速索引
 
 - [架构约束](#一架构约束)
@@ -18,8 +16,6 @@
 - [代码审查](#四代码审查)
 - [禁止事项](#五禁止事项清单)
 - [编译验证](#六编译验证)
-
----
 
 ## 一、架构约束
 
@@ -76,8 +72,6 @@ common/
 - 按功能域分包，不按层级分包。
 - 包名必须清晰表达意图（如 `exception` 而非 `errors`）。
 - 新增包需经团队评审。
-
----
 
 ## 二、类设计规范
 
@@ -139,8 +133,6 @@ public @interface Cache {
 - **DomainEventHandler**：仅定义接口，实现在 application。
 - **@OnEvent**：仅用于标记事件处理方法，由 infrastructure 扫描注册。
 
----
-
 ## 三、单元测试
 
 ### 3.1 覆盖率要求
@@ -162,8 +154,6 @@ void shouldThrowExceptionWhenNotFound() {
             .hasFieldOrPropertyWithValue("code", "NOT_FOUND");
 }
 ```
-
----
 
 ## 四、代码审查
 
@@ -189,8 +179,6 @@ void shouldThrowExceptionWhenNotFound() {
 - 报告必须明确标注审查范围
 - 报告必须包含"审查结论"章节
 
----
-
 ## 五、禁止事项清单
 
 | 禁止项 | 级别 | 原因 |
@@ -207,15 +195,11 @@ void shouldThrowExceptionWhenNotFound() {
 | 未按功能域分包 | P1 | 包结构混乱 |
 | unused import | P2 | 代码整洁问题 |
 
----
-
 ## 六、编译验证
 
 1. 执行 `mvn compile -q` 验证编译通过
 2. 执行 `mvn test` 验证测试通过
 3. 检查并移除所有 unused import
 4. 确保 JaCoCo 覆盖率检查通过（行/分支 ≥ 90%）
-
----
 
 *本文档用于代码审核，所有 common 层代码必须遵守本规范。*

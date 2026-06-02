@@ -15,8 +15,6 @@
 
 </div>
 
----
-
 ## 它解决什么
 
 > 当 AI 编码能力突飞猛进、却频繁失控时,什么才是真正的护栏?
@@ -31,8 +29,6 @@
 - 🔔 **统一领域事件机制** —— 本地 + Kafka 双通道,纯 JSON 跨服务通信
 - 🏢 **多租户基础架构** —— Gateway Header 透传(`x-tenant-id` / `x-tenant-permissions`)
 - 📊 **统一响应/异常/分页/审计** —— 出厂即可用,杜绝重复造轮子
-
----
 
 ## 1 分钟看懂分层
 
@@ -51,8 +47,6 @@ infrastructure   ← 基础设施(JPA 实体, Feign, Kafka, RepositoryImpl) 实�
 ```
 
 **铁律**:`domain` 与 `common` 零 Spring 依赖,可被任意框架替换、可独立测试。
-
----
 
 ## 快速开始
 
@@ -88,8 +82,6 @@ mvn -pl bootstrap spring-boot:run
 - 💚 **健康检查**: http://localhost:8080/actuator/health
 - 📊 **指标**: http://localhost:8080/actuator/metrics
 
----
-
 ## 用作自己项目的脚手架
 
 ```bash
@@ -114,8 +106,6 @@ done
 # 4. 编译验证
 mvn clean test
 ```
-
----
 
 ## 与 AI Agent 协同
 
@@ -143,8 +133,6 @@ mvn clean test
 
 各层有独立的 `AGENTS.md`,提供更细颗粒度的约束。
 
----
-
 ## 项目结构
 
 ```text
@@ -163,8 +151,6 @@ framework/
 └── pbac-test.http          # PBAC 权限测试用例
 ```
 
----
-
 ## 核心特性
 
 | 特性 | 说明 |
@@ -178,8 +164,6 @@ framework/
 | **代码质量门禁** | Checkstyle + 编译时层级约束 |
 
 > 详细机制说明见 [readme.md](./readme.md)。
-
----
 
 ## 在生态中的位置
 
@@ -202,8 +186,6 @@ framework/
          └──────────────────┘         └──────────────────┘
 ```
 
----
-
 ## 落地数据
 
 | 指标 | 效果 |
@@ -213,8 +195,6 @@ framework/
 | 🛡 架构腐化率 | **由 AGENTS.md 强制约束接近 0** |
 | 🧪 领域层测试覆盖 | **≥ 90%(JaCoCo 强制)** |
 
----
-
 ## 适用场景
 
 - ✅ **多租户 SaaS 平台** —— 内置租户上下文与权限基座
@@ -223,8 +203,6 @@ framework/
 - ✅ **云原生微服务** —— 与 Spring Cloud 生态深度契合
 - ⚠️ **不适合**:简单 CRUD、原型验证、单租户工具
 
----
-
 ## 深入阅读
 
 - 📐 [**详细架构与开发规范**](./readme.md) —— 六层职责、命名约定、核心机制(必读)
@@ -232,8 +210,6 @@ framework/
 - 📚 [**双文档体系说明**](./DOCS.md) —— 为什么有 readme + AGENTS 双轨
 - ✅ [**代码审查清单**](./code-review.md) —— PR 评审标准
 - 🌟 [**ArchAIHarness 方法论**](https://github.com/ArchAIHarness/docs) —— 框架背后的思想体系
-
----
 
 ## 共建社区
 

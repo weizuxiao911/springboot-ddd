@@ -8,8 +8,6 @@
 > 本文档定义领域层（Domain Layer）的代码审核规范与约束。
 > 所有新增或修改的领域层代码必须通过审核方可合并。
 
----
-
 ## 快速索引
 
 - [架构约束](#一架构约束)
@@ -20,8 +18,6 @@
 - [测试规范](#六测试规范)
 - [代码审查](#七代码审查)
 - [编译验证](#八编译验证)
-
----
 
 ## 一、架构约束
 
@@ -48,8 +44,6 @@ domain 模块依赖 common 模块，使用共享组件。
 - 定义仓库接口（由 infrastructure 实现）
 - 定义外部服务接口（由 infrastructure 实现）
 - 产生领域事件
-
----
 
 ## 二、包结构
 
@@ -101,8 +95,6 @@ public record ProductInfo(
 ) {}
 ```
 
----
-
 ## 三、异常规范
 
 **核心原则**
@@ -128,8 +120,6 @@ throw DomainException.of("CUSTOM_CODE", "message");
 | 定义异常子类（如 `XxxNotFoundException`） | P0 |
 | 使用 `IllegalArgumentException` 表达业务错误 | P1 |
 | 使用 `RuntimeException` 表达业务错误 | P1 |
-
----
 
 ## 四、建模规范
 
@@ -166,8 +156,6 @@ throw DomainException.of("CUSTOM_CODE", "message");
 - **必须**使用值对象类型（如 `UserId`），禁止使用 `String` 或 `Long`
 - 提供 `of(String)` 工厂方法和 `generate()` 生成方法
 
----
-
 ## 五、禁止事项清单
 
 | 禁止项 | 级别 | 原因 |
@@ -190,8 +178,6 @@ throw DomainException.of("CUSTOM_CODE", "message");
 | 实体无注释 | P1 | 降低可读性 |
 | 使用空标记接口 | P2 | 无实际价值 |
 
----
-
 ## 六、测试规范
 
 ### 覆盖率要求
@@ -212,8 +198,6 @@ throw DomainException.of("CUSTOM_CODE", "message");
 | 实体行为方法 | 必须测试正常流程、边界条件、异常场景 |
 | 工厂方法 | 必须测试创建结果、默认值、事件注册 |
 | 值对象 | 必须测试相等性、校验逻辑 |
-
----
 
 ## 七、代码审查
 
@@ -239,14 +223,10 @@ throw DomainException.of("CUSTOM_CODE", "message");
 - 报告必须明确标注审查范围
 - 报告必须包含"审查结论"章节
 
----
-
 ## 八、编译验证
 
 1. 执行 `mvn compile -q` 验证编译通过
 2. 执行 `mvn test` 验证测试通过
 3. 检查并移除所有 unused import
-
----
 
 *本文档用于代码审核，所有领域层代码必须遵守本规范。*

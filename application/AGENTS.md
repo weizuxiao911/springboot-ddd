@@ -8,8 +8,6 @@
 > 本文档定义应用层（Application Layer）的代码审核规范与约束。
 > 所有新增或修改的应用层代码必须通过审核方可合并。
 
----
-
 ## 快速索引
 
 - [架构约束](#一架构约束)
@@ -22,8 +20,6 @@
 - [测试规范](#八测试规范)
 - [代码审查](#九代码审查)
 - [编译验证](#十编译验证)
-
----
 
 ## 一、架构约束
 
@@ -54,8 +50,6 @@ application → common
 - 不写核心业务规则（应由领域层承担）
 - 不直接做持久化或第三方调用细节（应由基础设施层承担）
 - 不定义应用层异常，不转换 `DomainException`
-
----
 
 ## 二、包结构
 
@@ -94,8 +88,6 @@ application/
 | utils/（未使用） | P1 |
 
 **空目录必须加 .gitkeep，非空不加**
-
----
 
 ## 三、应用服务规范
 
@@ -165,8 +157,6 @@ public class UserAppService {
 
 **禁止**：使用 `Stream` / `Optional` 做业务逻辑（过滤、聚合、复杂判断）。
 **允许**：DTO 转换（`map`）、简单判空（`orElseThrow`）。
-
----
 
 ## 四、DTO 规范
 
@@ -241,8 +231,6 @@ public class UserResponse {
 }
 ```
 
----
-
 ## 五、领域事件处理
 
 ### 发布端
@@ -296,8 +284,6 @@ public class UserCreatedEventHandler {
 }
 ```
 
----
-
 ## 六、异常规范
 
 **核心原则**
@@ -324,8 +310,6 @@ public UserResponse createUser(CreateUserCommand command) {
 | 定义应用层异常（如 `ApplicationException`） | P0 |
 | 捕获并转换 `DomainException` | P0 |
 | 在应用层定义事务边界（应在应用服务方法上） | P0 |
-
----
 
 ## 七、禁止事项清单
 
@@ -358,8 +342,6 @@ public UserResponse createUser(CreateUserCommand command) {
 | 用例不原子化 | P1 | 单一职责 |
 | 使用空标记接口 | P2 | 无实际价值 |
 | unused import | P2 | 代码整洁问题 |
-
----
 
 ## 八、测试规范
 
@@ -445,8 +427,6 @@ User mockUser = mock(User.class);
 when(mockUser.getUsername()).thenReturn("zhangsan");
 ```
 
----
-
 ## 九、代码审查
 
 ### 审查顺序
@@ -473,15 +453,11 @@ when(mockUser.getUsername()).thenReturn("zhangsan");
 - 若本次无代码变更，报告应标注"无增量代码，无需审查"
 - 报告必须包含"审查结论"章节，明确标注"合格/不合格，是否允许合并"
 
----
-
 ## 十、编译验证
 
 1. 执行 `mvn compile -q` 验证编译通过
 2. 执行 `mvn test` 验证测试通过
 3. 检查并移除所有 unused import
 4. 确保 JaCoCo 覆盖率检查通过（行/分支 ≥ 90%）
-
----
 
 *本文档用于代码审核，所有应用层代码必须遵守本规范。*

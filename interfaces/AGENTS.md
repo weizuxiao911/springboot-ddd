@@ -8,8 +8,6 @@
 > 本文档定义接口层（Interfaces Layer）的开发规范、约束和最佳实践。
 > 所有新增或修改的接口层代码必须遵守本规范。
 
----
-
 ## 快速索引
 
 - [架构约束](#一架构约束)
@@ -25,8 +23,6 @@
 - [问题分级](#十一问题分级)
 - [禁止事项](#十二禁止事项清单)
 - [编译验证](#十三编译验证)
-
----
 
 ## 目录
 
@@ -64,8 +60,6 @@
 - [十二、禁止事项清单](#十二禁止事项清单)
 - [十三、编译验证](#十三编译验证)
 
----
-
 ## 一、架构约束
 
 ### 1.1 分层架构
@@ -101,8 +95,6 @@ interfaces → common (直接依赖 DomainException、AppContext)
 
 - `interfaces/config/` 是统一的技术封装（如 OpenAPI、WebMvcConfig 等）
 - **非必要禁止修改**，保持开箱即用
-
----
 
 ## 二、控制器规范
 
@@ -143,8 +135,6 @@ public class UserController {
 - 路径使用复数名词：`/api/users`
 - 操作使用 HTTP 方法区分：`GET/POST/PUT/DELETE`
 - 所有接口返回 `R<T>` 统一响应格式
-
----
 
 ## 三、DTO 规范
 
@@ -310,8 +300,6 @@ void shouldReturnTrueWhenTokenIsValid() {
 | 响应包装 | 测试包装逻辑、双重包装防护 |
 | 控制器 | 测试请求映射、参数校验、响应格式 |
 
----
-
 ## 十、代码审查
 
 ### 10.1 审查范围
@@ -328,8 +316,6 @@ void shouldReturnTrueWhenTokenIsValid() {
 
 - 必须只列出本次修改涉及的文件和问题
 - 报告必须包含"审查结论"章节，明确标注"合格/不合格"
-
----
 
 ## 十一、问题分级
 
@@ -353,8 +339,6 @@ void shouldReturnTrueWhenTokenIsValid() {
 | unused import | P2 | 代码整洁问题 |
 | 方法命名不贴近业务语义 | P2 | 可读性问题 |
 
----
-
 ## 十二、禁止事项清单
 
 | 禁止项 | 级别 | 原因 |
@@ -368,15 +352,11 @@ void shouldReturnTrueWhenTokenIsValid() {
 | 响应双重包装 | P1 | 数据格式错误 |
 | 使用空标记接口 | P2 | 无实际价值 |
 
----
-
 ## 十三、编译验证
 
 1. 每次修改后执行 `mvn compile -q` 验证编译通过
 2. 检查并移除所有 unused import
 3. 执行 `mvn test` 验证测试通过，覆盖率达标
 4. 确保无 Spring Bean 命名冲突（同类名在不同包需确认无冲突）
-
----
 
 *本文档由团队共创，后续所有接口层代码必须遵守本规范。*
