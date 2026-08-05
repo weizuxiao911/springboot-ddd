@@ -1,17 +1,17 @@
 <div align="center">
 
-# ArchAIHarness · Framework
+# SpringBoot DDD · weizuxiao911
 
-### 人架构 · AI 编码 · DDD 多租户 企业级脚手架
+### Spring Boot 3.3 + DDD 多租户企业级开发脚手架
 
 **一套让 AI 在架构师定义的秩序中安全生长的 Spring Boot 底座**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-success.svg?style=flat-square)](LICENSE)
 [![Java 17](https://img.shields.io/badge/Java-17-orange?style=flat-square&logo=openjdk)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3-6DB33F?style=flat-square&logo=spring)](https://spring.io/projects/spring-boot)
-[![DDD](https://img.shields.io/badge/Paradigm-DDD-blue?style=flat-square)](https://github.com/ArchAIHarness/docs)
+[![DDD](https://img.shields.io/badge/Paradigm-DDD-blue?style=flat-square)](./AGENTS.md)
 [![AI Friendly](https://img.shields.io/badge/AI-AGENTS.md-9333EA?style=flat-square)](./AGENTS.md)
-[![Organization](https://img.shields.io/badge/Org-ArchAIHarness-181717?style=flat-square&logo=github)](https://github.com/ArchAIHarness)
+[![Organization](https://img.shields.io/badge/Org-weizuxiao911-181717?style=flat-square&logo=github)](https://github.com/weizuxiao911)
 
 </div>
 
@@ -21,7 +21,7 @@
 >
 > **答案是:架构师的秩序 —— 用工程化的约束,让 AI 永远在边界内生长。**
 
-`framework` 是 ArchAIHarness 生态的**核心底座**,在每一个新服务诞生的第一天,就把以下能力固化进去:
+`springboot-ddd` 是面向多租户企业级后端服务的 **Spring Boot DDD 脚手架**,在每一个新服务诞生的第一天,就把以下能力固化进去:
 
 - 🧱 **严格的 DDD 六模块分层**(common · domain · application · infrastructure · interfaces · bootstrap)
 - 🛡 **内置 `AGENTS.md` 强约束规范** —— AI Agent 编码时自动遵守
@@ -64,8 +64,8 @@ infrastructure   ← 基础设施(JPA 实体, Feign, Kafka, RepositoryImpl) 实�
 
 ```bash
 # 克隆
-git clone https://github.com/ArchAIHarness/framework.git
-cd framework
+git clone https://github.com/weizuxiao911/springboot-ddd.git
+cd springboot-ddd
 
 # 编译 + 测试(零外部依赖)
 mvn clean test
@@ -86,26 +86,27 @@ mvn -pl bootstrap spring-boot:run
 
 ```bash
 # 1. 克隆并改名
-git clone https://github.com/ArchAIHarness/framework.git my-service
+git clone https://github.com/weizuxiao911/springboot-ddd.git my-service
 cd my-service
 
 # 2. 全局替换包名
 
 # macOS / BSD sed:
 find . -type f \( -name "*.java" -o -name "*.xml" -o -name "*.yml" \) \
-    -exec sed -i '' 's|top.archaiharness.framework|com.your.service|g' {} +
+    -exec sed -i '' 's|io.github.weizuxiao911.springboot.ddd|com.your.service|g' {} +
 
 # Linux / GNU sed:
 find . -type f \( -name "*.java" -o -name "*.xml" -o -name "*.yml" \) \
-    -exec sed -i 's|top.archaiharness.framework|com.your.service|g' {} +
+    -exec sed -i 's|io.github.weizuxiao911.springboot.ddd|com.your.service|g' {} +
 
-# 3. 移动目录
+# 3. 移动目录(从 io/github/weizuxiao911/springboot/ddd → com/your/service)
 for m in common domain application infrastructure interfaces bootstrap; do
   for s in main test; do
-    [ -d "$m/src/$s/java/top/archaiharness/framework" ] && \
+    src="$m/src/$s/java/io/github/weizuxiao911/springboot/ddd"
+    [ -d "$src" ] && \
       mkdir -p "$m/src/$s/java/com/your/service" && \
-      mv "$m/src/$s/java/top/archaiharness/framework"/* "$m/src/$s/java/com/your/service/" && \
-      rm -rf "$m/src/$s/java/top"
+      mv "$src"/* "$m/src/$s/java/com/your/service/" && \
+      rm -rf "$m/src/$s/java/io"
   done
 done
 
@@ -142,7 +143,7 @@ mvn clean test
 ## 项目结构
 
 ```text
-framework/
+springboot-ddd/
 ├── bootstrap/              # 启动模块 @SpringBootApplication
 ├── interfaces/             # 接口层 Controller / ExceptionAdvice / Aspect
 ├── application/            # 应用层 AppService / Command / Query
@@ -174,22 +175,10 @@ framework/
 ## 在生态中的位置
 
 ```text
-                   ┌──────────────────────────────────┐
-                   │  ArchAIHarness/docs              │  哲学 + 方法论
-                   │  (philosophy · methodology)      │
-                   └────────────────┬─────────────────┘
-                                    │ 指导
-                                    ▼
         ┌───────────────────────────────────────────────────┐
-        │  ArchAIHarness/framework          ← 你在这里       │
+        │  weizuxiao911/springboot-ddd   ← 你在这里       │
         │  (DDD 脚手架 + AGENTS.md 约束 + 多租户 + PBAC)     │
-        └─────────┬─────────────────────────────┬───────────┘
-                  │                             │
-                  ▼                             ▼
-         ┌──────────────────┐         ┌──────────────────┐
-         │  mcp-sdk         │         │ agent-workflows  │
-         │  (Agent 通信)     │         │ (AI 工作流包)     │
-         └──────────────────┘         └──────────────────┘
+        └───────────────────────────────────────────────────┘
 ```
 
 ## 落地数据
@@ -215,12 +204,11 @@ framework/
 - 🤖 [**AI Agent 约束规范**](./AGENTS.md) —— AI 编码必读
 - 📚 [**双文档体系说明**](./DOCS.md) —— 为什么有 readme + AGENTS 双轨
 - ✅ [**代码审查清单**](./code-review.md) —— PR 评审标准
-- 🌟 [**ArchAIHarness 方法论**](https://github.com/ArchAIHarness/docs) —— 框架背后的思想体系
 
 ## 共建社区
 
 本项目以 **MIT 协议**全面开源。无论你是架构师、领域专家、AI 工程师,
-我们都欢迎你通过 [Issue](https://github.com/ArchAIHarness/framework/issues) / PR / 案例分享共建生态。
+我们都欢迎你通过 [Issue](https://github.com/weizuxiao911/springboot-ddd/issues) / PR / 案例分享共建生态。
 
 <div align="center">
 

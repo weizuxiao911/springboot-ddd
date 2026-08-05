@@ -185,7 +185,7 @@ spring:
     properties:
       hibernate:
         session_factory:
-          statement_inspector: top.archaiharness.framework.infrastructure.config.jpa.statement.JpaStatementInspector
+          statement_inspector: io.github.weizuxiao911.springboot.ddd.infrastructure.config.jpa.statement.JpaStatementInspector
 ```
 
 ### 3.3 仓库实现
