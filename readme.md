@@ -89,9 +89,15 @@ mvn -pl bootstrap spring-boot:run
 git clone https://github.com/ArchAIHarness/framework.git my-service
 cd my-service
 
-# 2. 全局替换包名(macOS / Linux)
+# 2. 全局替换包名
+
+# macOS / BSD sed:
 find . -type f \( -name "*.java" -o -name "*.xml" -o -name "*.yml" \) \
     -exec sed -i '' 's|top.archaiharness.framework|com.your.service|g' {} +
+
+# Linux / GNU sed:
+find . -type f \( -name "*.java" -o -name "*.xml" -o -name "*.yml" \) \
+    -exec sed -i 's|top.archaiharness.framework|com.your.service|g' {} +
 
 # 3. 移动目录
 for m in common domain application infrastructure interfaces bootstrap; do

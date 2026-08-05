@@ -42,7 +42,7 @@
 - SpEL 表达达式中不含 `:`（冒号），固定权限码直接写字符串
 - `@RequirePermission` 的 `resource + action` 自动组合为 `RESOURCE:ACTION`
 - Gateway 透传 Headers：`x-user-id`、`x-tenant-id`、`x-accessible-tenants`、`x-tenant-permissions`
-- `AccessDeniedException` 由 `GlobalExceptionAdvice` 统统一捕获返回 403
+- `AccessDeniedException` 由 `GlobalExceptionAdvice` 统一捕获返回 403
 
 ## 5. 数据库检查
 

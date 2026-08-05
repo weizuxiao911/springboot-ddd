@@ -1,5 +1,4 @@
--- Active: 1768275774191@@127.0.0.1@3306@test2
--- Framework DDL
+-- Spring Boot DDD DDL
 -- Generated from JPA Entity definitions
 
 CREATE TABLE `t_user` (
@@ -16,6 +15,5 @@ CREATE TABLE `t_user` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_user_id` (`user_id`),
     UNIQUE KEY `uk_username` (`username`),
-    KEY `idx_tenant_id` (`tenant_id`),
     KEY `idx_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';

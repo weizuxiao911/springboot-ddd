@@ -33,7 +33,7 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+<maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <spring.cloud.version>2023.0.3</spring.cloud.version>
         <spring.boot.version>3.3.2</spring.boot.version>
         <lombok.version>1.18.28</lombok.version>
@@ -43,7 +43,6 @@
         <springdoc.openapi.version>2.1.0</springdoc.openapi.version>
         <knife4j-openapi3.version>4.4.0</knife4j-openapi3.version>
         <auth0.java-jwt.version>4.4.0</auth0.java-jwt.version>
-        <kubernetes.client-java.version>18.0.0</kubernetes.client-java.version>
         <junit.jupiter.version>5.10.3</junit.jupiter.version>
         <mockito.version>5.8.0</mockito.version>
         <checkstyle.version>10.12.7</checkstyle.version>
@@ -118,7 +117,7 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!-- mapstruct -->
+            <!-- mapstruct (为后续 DTO 转换预留,当前代码用静态工厂) -->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
@@ -141,13 +140,6 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j-openapi3.version}</version>
-            </dependency>
-
-            <!-- kubernetes client -->
-            <dependency>
-                <groupId>io.kubernetes</groupId>
-                <artifactId>client-java</artifactId>
-                <version>${kubernetes.client-java.version}</version>
             </dependency>
 
             <!-- mysql driver-->
@@ -256,19 +248,17 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.compiler.plugin.version}</version>
-                    <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
-                        <compilerArgs>
-                            <arg>-parameters</arg>
-                            <arg>-g:vars</arg>
-                        </compilerArgs>
-                        <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                        <fork>true</fork>
-                        <compilerArgs combine.self="override">
-                            <arg>-Xlint:all</arg>
-                        </compilerArgs>
-                    </configuration>
+<configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                        <arg>-g:vars</arg>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
+                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    <fork>true</fork>
+                </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -362,8 +352,9 @@
                     <artifactId>pmd</artifactId>
                     <version>${pmd.version}</version>
                     <configuration>
-                        <rulesets>1</rulesets>
-                        <rulesets>/rulesets/java/quickstart.xml</rulesets>/rulesets>
+                        <rulesets>
+                            <ruleset>/rulesets/java/quickstart.xml</ruleset>
+                        </rulesets>
                         <includeTests>false</includeTests>
                         <failOnViolation>false</failOnViolation>
                     </configuration>

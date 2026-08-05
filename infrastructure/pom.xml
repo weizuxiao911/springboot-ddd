@@ -19,15 +19,14 @@
             <artifactId>domain</artifactId>
         </dependency>
 
+        <!-- Lombok: provided scope 避免打入运行时 jar -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+        <!-- infrastructure 不引入 spring-boot-starter-web(Web 属于 interfaces 层职责) -->
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -79,15 +78,8 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-okhttp</artifactId>
-        </dependency>
+        <!-- 移除 spring-cloud-starter-circuitbreaker-resilience4j(未配置,且由 openfeign 传递) -->
+        <!-- 移除 feign-okhttp(已由 spring-cloud-starter-openfeign 传递) -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

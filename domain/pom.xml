@@ -17,9 +17,11 @@
             <artifactId>common</artifactId>
         </dependency>
 
+        <!-- Lombok: provided scope,domain 层零框架依赖严格遵守 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

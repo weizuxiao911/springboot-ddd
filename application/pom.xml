@@ -17,15 +17,19 @@
             <artifactId>domain</artifactId>
         </dependency>
 
+        <!-- Lombok: 编译时 annotation processor,provided scope 避免打入运行时 jar -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
+        <!-- spring-tx 由 spring-boot-starter 隐式传递,无需显式声明 -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
